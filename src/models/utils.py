@@ -6,11 +6,12 @@ import pickle
 from scipy.sparse.linalg import eigs
 from sklearn.preprocessing import minmax_scale
 
-path1 = '/Users/zhiyun/Desktop/fall2021/fyt/fyt_spatiotemporal/src/data/new_fc_mat.pkl'
-path2 = '/Users/zhiyun/Desktop/fall2021/fyt/fyt_spatiotemporal/src/data/fc_wam.pkl'
-neighbor_mat_path = '/Users/zhiyun/Desktop/fall2021/fyt/fyt_spatiotemporal/src/data/neighbor_wam.pkl'
-poi_mat_path = '/Users/zhiyun/Desktop/fall2021/fyt/fyt_spatiotemporal/src/data/poi_wam.pkl'
-speed_mat_path = '/Users/zhiyun/Desktop/fall2021/fyt/fyt_spatiotemporal/src/data/speed_wam.pkl'
+path1 = 'src/data/new_fc_mat.pkl'
+path2 = 'src/data/fc_wam.pkl'
+neighbor_mat_path = 'src/data/neighbor_wam.pkl'
+poi_mat_path = 'src/data/poi_wam.pkl'
+speed_mat_path = 'src/data/speed_wam.pkl'
+
 
 class Dataset(object):
     # 2903, 2615
@@ -23,9 +24,6 @@ class Dataset(object):
             self.neighbor_adj_np = self._load_raw_data(neighbor_mat_path, matrix=True)
             self.poi_adj_np = self._load_raw_data(poi_mat_path, matrix=True)
             self.speed_adj_np = self._load_raw_data(speed_mat_path, matrix=True)
-        
-        # self.X_train_np, self.y_train_np, self.X_test_np, self.y_test_np = self._generate_dataset(data_np)
-
 
     def _load_raw_data(self, file_path, matrix=False):
         """
@@ -56,56 +54,6 @@ class Dataset(object):
                 end = sta + n_frame
                 tmp_seq[i * n_slot + j, :, :, :] = np.reshape(data_seq[sta:end, :], [n_frame, n_route, C_0])
         return tmp_seq
-
-    def _calculate_normalized_laplacian(self, A):
-        """
-        Calculate normalized Laplacian matrix as:
-            L = D^-1/2 (D-A) D^-1/2 = I - D^-1/2 A D^-1/2
-        :param A: adjacency matrix 
-        """
-        A = sp.coo_matrix(A)
-        D = np.array(A.sum(1))
-        D[D <= 10e-6] = 10e-6   # prevent divide by zero
-        D_inv = np.power(D, -0.5).flatten()
-        D_inv[np.isinf(D_inv)] = 0.
-        D_inv_mat = sp.diags(D_inv)
-        normalized_laplacian = sp.eye(A.shape[0]) - A.dot(D_inv_mat).transpose().dot(D_inv_mat).tocoo()
-        return normalized_laplacian
-
-    def _calculate_scaled_laplacian(self, W):
-        W = self._calculate_normalized_laplacian(W + sp.eye(W.shape[0]))
-        W = sp.csr_matrix(W)
-        W = W.astype(np.float32)
-        return W
-        # n, d = np.shape(W)[0], np.sum(W, axis=1)
-        # # L -> graph Laplacian
-        # L = -W
-        # L[np.diag_indices_from(L)] = d
-        # for i in range(n):
-        #     for j in range(n):
-        #         if (d[i] > 0) and (d[j] > 0):
-        #             L[i, j] = L[i, j] / np.sqrt(d[i] * d[j])
-        # # lambda_max \approx 2.0, the largest eigenvalues of L.
-        # lambda_max = eigs(L, k=1, which='LR')[0][0].real
-        # W = np.mat(2 * L / lambda_max - np.identity(n))
-        # # if set(np.unique(W)) == {0,1}:
-        # #     print('The input graph is a 0/1 matrix; set "scaling" to False.')
-        # #     scaling = False
-
-        # # if scaling:
-        # #     print('Scaled')
-        # #     n = W.shape[0]
-        # #     W = W / 10000.
-        # #     W2, W_mask = W * neighbor_adj, np.ones([n, n]) - np.identity(n)
-        # #     return np.exp(-W2 / sigma2) * (np.exp(-W2 / sigma2) >= epsilon) * W_mask
-
-        # return W
-
-    def get_normalized_adj(self):
-        self.neighbor_adj_np = self._calculate_scaled_laplacian(self.neighbor_adj_np)
-        self.poi_adj_np = self._calculate_scaled_laplacian(self.poi_adj_np)
-        self.speed_adj_np = self._calculate_scaled_laplacian(self.speed_adj_np)
-        return self.neighbor_adj_np, self.poi_adj_np, self.speed_adj_np
 
 
     def generate(self, feat_len, pre_len, output_len):
@@ -162,13 +110,8 @@ class Dataset(object):
         self.X_test_np = np.array([self.data_np[indices[0], indices[1] : indices[1] + feat_len] for indices in test_start_idx])
         self.y_test_np = np.array([self.data_np[indices[0], indices[1] + feat_len : indices[1] + feat_len + pre_len] for indices in test_start_idx])
 
-        # scaler = MinMaxScaler()
-        # self.X_train_np = minmax_scale(self.X_train_np.T).T
-        # self.y_train_np = minmax_scale(self.y_train_np.T).T
-        # self.X_test_np = minmax_scale(self.X_test_np.T).T
-        # self.y_test_np = minmax_scale(self.y_test_np.T).T
-
         return self.X_train_np, self.y_train_np, self.X_test_np, self.y_test_np
+
 
     def generate_batch(self, data, batch_size):
         data_len = len(data)
@@ -178,6 +121,11 @@ class Dataset(object):
                 break
             slide = slice(start_idx, end_idx)
         yield data[slide]
+
+
+    def get_multigraph(self):
+        return np.mat(self.neighbor_adj_np), np.mat(self.poi_adj_np), np.mat(self.speed_adj_np)
+
 
     def print_info(self):
         print('X_train_np shape:', self.X_train_np.shape)
