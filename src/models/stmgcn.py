@@ -4,6 +4,8 @@ warnings.filterwarnings('ignore')
 import numpy as np
 from sklearn.metrics import mean_squared_error
 import tensorflow as tf 
+from tensorflow.python.client import device_lib
+import os
 # from tensorflow.compat.v1 import ConfigProto
 # from tensorflow.compat.v1 import InteractiveSession
 
@@ -17,6 +19,11 @@ from layers.gconv import gconv
 from layers.temporal_conv import tcn_layer
 from keras_self_attention import SeqSelfAttention
 from keras.layers import Dense
+
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
+
+print(device_lib.list_local_devices())
 
 HIDDEN_UNITS = 32
 N_NODES = 500
@@ -76,8 +83,8 @@ output = tf.reshape(output, [-1,N_NODES])
 init = tf.compat.v1.global_variables_initializer()
 with tf.compat.v1.Session() as sess:
     sess.run(init)
-    output = sess.run([output], feed_dict={X: X_train, y:y_train})
-    print('Output 1 after TCN layer:', output)
+    # output = sess.run([output], feed_dict={X: X_train, y:y_train})
+    # print('Output 1 after TCN layer:', output)
 # error = tf.sqrt(tf.reduce_mean(tf.square(output-y)))
 # optimizer = tf.train.AdamOptimizer(0.01).minimize(loss)
 

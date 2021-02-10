@@ -140,13 +140,9 @@ class gconv(tf.keras.Model):
             weights = tf.compat.v1.get_variable('weights', [input_size * num_matrices, output_size],
                 dtype='float32',
                 initializer=tf.contrib.layers.xavier_initializer())
-            x = tf.matmul(
-                x, weights)  # (batch_size * self._num_nodes, output_size)
+            x = tf.matmul(x, weights)  # (batch_size * self._num_nodes, output_size)
             # print('X type: ', type(x))
-            biases = tf.get_variable("biases", [output_size],
-                                     dtype='float32',
-                                     initializer=tf.constant_initializer(
-                                         bias_start, dtype='float32'))
+            biases = tf.compat.v1.get_variable("biases", [output_size], dtype='float32', initializer=tf.constant_initializer(bias_start, dtype='float32'))
             x = tf.cast(x, 'float32')
             x = tf.nn.bias_add(x, biases)
         # Reshape res back to: (batch_size, num_node, state_dim)
