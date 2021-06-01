@@ -1,0 +1,7 @@
+sklearn
+statsmodels
+keras==2.3.1
+keras-self-attention
+tensorboard==1.14.0
+tensorflow==1.14.0
+tensorflow-estimator

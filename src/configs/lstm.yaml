@@ -1,0 +1,24 @@
+general:
+  log_level: INFO
+  output_dir: ./output
+dataset:
+  pems_data_path: './data/pems/PeMSD7_V_228.csv'
+  pems_adj_path: './data/pems/PeMSD7_W_228.csv'
+  train_ratio: 0.6
+  val_ratio: 0.2
+model:
+  name: lstm
+  input_dim: [576384,4,1]
+  batch_size: 64
+  num_hidden_layers: 2
+  hidden_size: 32
+  use_bn: True
+  activation: relu
+  keep_prob: 0.7
+trainer:
+  num_steps: 4
+  loss: l2_loss
+  early_stopping: 2
+  num_epochs: 3
+  lr: 0.001
+  save_best_model: True

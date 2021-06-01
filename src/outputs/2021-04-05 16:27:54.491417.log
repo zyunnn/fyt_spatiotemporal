@@ -1,0 +1,23 @@
+2021-04-15 16:27:27,491 INFO - models.utils - Finished configuring logger
+2021-04-15 16:27:29,498 INFO - __main__ - Generating data from PeMS-M dataset...
+2021-04-15 16:27:54,212 INFO - __main__ - test result for 30-minute interval
+2021-04-15 16:27:58,713 INFO - __main__ - Dataset info: {'X_train_np.shape': (7603, 500, 4), 'y_test_np.shape': (7603, 500), 'X_val_np.shape': (2534, 500, 4), 'y_val_np.shape': (2534, 500), 'X_test_np.shape': (2535, 500, 4), 'y_test_np.shape': (2535, 500)}
+2021-04-15 16:28:40,123 INFO - models.stmgan - [train] [Epoch: 0] [Loss: 2338.63530] RMSE: 9.76127 MAPE:  MAE:         -- [val] [Loss: 1534.71010] RMSE: 5.77195 MAPE:  MAE: 
+2021-04-15 16:30:13,276 INFO - models.stmgan - [train] [Epoch: 1] [Loss: 1878.28868] RMSE: 5.93876 MAPE:  MAE:         -- [val] [Loss: 1497.06826] RMSE: 5.83742 MAPE: MAE: 
+2021-04-15 16:31:25,461 INFO - models.stmgan - [train] [Epoch: 2] [Loss: 1711.00716] RMSE: 5.50812 MAPE:  MAE:         -- [val] [Loss: 1479.93021] RMSE: 5.85981 MAPE: MAE: 
+2021-04-15 16:33:35,724 INFO - models.stmgan - [train] [Epoch: 3] [Loss: 1625.38702] RMSE: 5.32798 MAPE:  MAE:          -- [val] [Loss: 1469.35658] RMSE: 5.86775 MAPE: MAE: 
+2021-04-15 16:34:41,836 INFO - models.stmgan - [train] [Epoch: 4] [Loss: 1572.89446] RMSE: 5.22684 MAPE:  MAE:         -- [val] [Loss: 1459.40559] RMSE: 5.86865 MAPE: MAE: 
+2021-04-15 16:35:23,123 INFO - models.stmgan - [train] [Epoch: 5] [Loss: 1538.59120] RMSE: 5.19024 MAPE:  MAE:          -- [val] [Loss: 1455.00120] RMSE: 5.86769 MAPE: MAE: 
+2021-04-15 16:37:27,887 INFO - models.stmgan - [train] [Epoch: 6] [Loss: 1496.79728] RMSE: 5.17175 MAPE:  MAE:          -- [val] [Loss: 1453.90885] RMSE: 5.86547 MAPE: MAE: 
+2021-04-15 16:38:12,823 INFO - models.stmgan - [train] [Epoch: 7] [Loss: 1472.90390] RMSE: 5.15533 MAPE:  MAE:          -- [val] [Loss: 1453.10425] RMSE: 5.86368 MAPE: MAE: 
+2021-04-15 16:40:17,134 INFO - models.stmgan - [train] [Epoch: 8] [Loss: 1457.38170] RMSE: 5.14056 MAPE:  MAE:          -- [val] [Loss: 1452.28232] RMSE: 5.86132 MAPE: MAE: 
+2021-04-15 16:41:47,524 INFO - models.stmgan - [train] [Epoch: 9] [Loss: 1445.72175] RMSE: 5.14251 MAPE:  MAE:         -- [val] [Loss: 1451.75430] RMSE: 5.86054 MAPE: MAE: 
+2021-04-15 16:42:82,752 INFO - models.stmgan - [train] [Epoch: 10] [Loss: 1436.81346] RMSE: 5.13359 MAPE:  MAE:          -- [val] [Loss: 1451.46772] RMSE: 5.85741 MAPE: MAE: 
+2021-04-15 16:44:47,623 INFO - models.stmgan - [train] [Epoch: 11] [Loss: 1429.72171] RMSE: 5.13739 MAPE:  MAE:          -- [val] [Loss: 1451.15651] RMSE: 5.85553 MAPE: MAE: 
+2021-04-15 16:45:18,735 INFO - models.stmgan - [train] [Epoch: 12] [Loss: 1423.72714] RMSE: 5.13639 MAPE: MAE:         -- [val] [Loss: 1450.85127] RMSE: 5.85222 MAPE: MAE: 
+2021-04-15 16:47:45,234 INFO - models.stmgan - [train] [Epoch: 13] [Loss: 1418.65845] RMSE: 5.15043 MAPE: MAE:          -- [val] [Loss: 1450.14284] RMSE: 5.85043 MAPE: MAE: 
+2021-04-15 16:48:27,376 INFO - models.stmgan - [train] [Epoch: 14] [Loss: 1414.34742] RMSE: 5.14477 MAPE: MAE:         -- [val] [Loss: 1448.97987] RMSE: 5.85043 MAPE: MAE: 
+2021-04-15 16:50:49,849 INFO - models.stmgan - [train] [Epoch: 16] [Loss: 1407.08087] RMSE: 5.16279 MAPE: MAE:         -- [val] [Loss: 1447.43169] RMSE: 5.85043 MAPE:  MAE: 
+2021-04-15 16:50:58,713 INFO - __main__ - Finish training...
+2021-04-15 16:50:58,713 INFO - __main__ - Start testing...
+2021-04-15 16:51:49,849 INFO - models.stmgan - [test] [Epoch: 0] [Loss: 1434.97001] RMSE: 5.76917 MAPE: 7.45915 MAE: 3.87834
